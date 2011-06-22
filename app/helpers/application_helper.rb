@@ -10,4 +10,10 @@ module ApplicationHelper
     end
   end
   
+  # define logo helper for _head.html.erb partial
+  def logo
+    image_tag("facebook.png", :alt => "Sample App", :class => "round")
+  end
+  	
+  
 end
