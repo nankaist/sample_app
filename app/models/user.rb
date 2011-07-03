@@ -36,10 +36,13 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
   
-  def self.authenticate(email, submitted_password)
+  def self.authenticate(email, submitted_password) # it is same with using "User.authenticate(...)"
     user = find_by_email(email)
-    return nil if user.nil?
-    return user if user.has_password?(submitted_password)
+    return nil if user.nil? # for user not exist
+    return user if user.has_password?(submitted_password) # for user/password match
+    return nil # explicit return for the non-match situation (this line can be deleted, meaning a implicit return nil)
+    # the 3 lines above can be written as:
+    # user && user.has_password?(submitted_password) ? user : nil
   end
   
   # a callback to create the encryted_password attribute

@@ -1,0 +1,4 @@
+<% flash.each do |key,value| %> <!-- show the loging flash -->
+	<!-- <div class="flash <%= key %>"><%= value %></div> -->
+	<%= content_tag(:div, value, :class => "flash #{key}")%> <!-- same thing with above -->
+<% end %>

@@ -6,7 +6,22 @@ class UsersController < ApplicationController
   end
   
   def new
+    @user = User.new
     @title = "Sign up"
+  end
+  
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      # handle a successful save.
+      flash[:success] = "Welcome to the Sample App!" # set up success flash message
+      redirect_to @user #rails know it should redirect to user_path(@user)
+    else
+      @title = "Sign up"
+      @user.password = nil # reset user.password to clean the password in form after signup failure
+      @user.password_confirmation = nil
+      render 'new'
+    end
   end
 
 end
