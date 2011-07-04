@@ -48,4 +48,39 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => 'Sign up')
   end
   
+  describe "when not signed in" do
+    it "should have a signin link" do
+      visit root_path
+      response.should have_selector("a", :href => signin_path, :content => "Sign in")
+    end
+  end
+  
+  describe "when signed in" do
+    before(:each) do
+      @user = Factory(:user)
+      visit signin_path
+      fill_in :email, :with => @user.email
+      fill_in :password, :with => @user.password
+      click_button
+    end
+    
+    it "should have a signout link" do
+      visit root_path
+      response.should have_selector("a", :href => signout_path, :content => "Sign out")
+    end
+    
+    # pending "should have a profile link"
+    it "should have a profile link" do
+      visit root_path
+      # response.should have_selector("a", :href => user_path(@user), :content => "Profile")
+      # same thing with the previous line
+      # !!Attn: use user_path(@user) with @user to visit user path, not just user_path; but, signin_path signout_path have not @user param
+      response.should have_selector("a",:href => user_path(@user)) do |a| 
+        a.should contain(@user.name+"'s Profile")
+      end
+    end
+    
+    
+  end
+  
 end

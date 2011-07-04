@@ -29,6 +29,11 @@ Spork.prefork do
     # examples within a transaction, comment the following line or assign false
     # instead of true.
     config.use_transactional_fixtures = true
+    
+    def test_sign_in(user) # after this declaration, we can use test_sign_in in all our tests with user.sign_in? is true
+      controller.sign_in(user)
+    end
+    
   end
 end
 

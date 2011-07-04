@@ -1,8 +1,13 @@
 SampleApp::Application.routes.draw do
+  get "sessions/new"
+
   # add users resources into router
   resources :users
+  resources :sessions, :only => [:new, :create, :destroy] #with only option to define actions of sessions
   
   match '/signup', :to => 'users#new'
+  match '/signin', :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
 
   get "pages/home"
   get "pages/contact"

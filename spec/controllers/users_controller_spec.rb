@@ -60,7 +60,7 @@ describe UsersController do
     end
   end
   
-  describe "POST 'create'" do
+  describe "POST 'create'" do # test for signup
     describe "failure" do
       before(:each) do
         @attr = { :name => "", :email => "",
@@ -94,6 +94,10 @@ describe UsersController do
         lambda do
           post :create, :user => @attr
         end.should change(User, :count).by(1) # store in database successful, User database :count +1
+      end
+      it "should sign the user in after sign-up" do # test for auto sign-in after sign-up
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
       it "should redirect to the user show page" do
         post :create, :user => @attr

@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       # handle a successful save.
+      sign_in @user #auto signin upon signup
       flash[:success] = "Welcome to the Sample App!" # set up success flash message
       redirect_to @user #rails know it should redirect to user_path(@user)
     else

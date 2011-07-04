@@ -45,6 +45,15 @@ class User < ActiveRecord::Base
     # user && user.has_password?(submitted_password) ? user : nil
   end
   
+  # authenticate method for cookie
+  def self.authenticate_with_salt(id,cookie_salt)
+    user = find_by_id(id)
+    (user && user.salt == cookie_salt)? user : nil
+    # or same with
+    # return nil if user.nil?
+    # reutrn user if user.salt == cookies_salt
+  end
+  
   # a callback to create the encryted_password attribute
   before_save :encrypt_password
   # all methords defined after private are used internally by the object and are not intended for public use.
