@@ -30,8 +30,20 @@ Spork.prefork do
     # instead of true.
     config.use_transactional_fixtures = true
     
-    def test_sign_in(user) # after this declaration, we can use test_sign_in in all our tests with user.sign_in? is true
+    def test_sign_in(user) # after this declaration, we can use test_sign_in in all our tests which need user sign_in
       controller.sign_in(user)
+    end
+    
+    def integration_sign_in(user) # use this to replace several sign in code in integration specs
+      visit signin_path
+      if user.nil?
+        fill_in :email, :with => ""
+        fill_in :password, :with => ""
+      else
+        fill_in :email, :with => user.email
+        fill_in :password, :with => user.password
+      end
+      click_button
     end
     
   end

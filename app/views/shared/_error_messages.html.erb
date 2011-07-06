@@ -1,13 +1,27 @@
-<% if @user.errors.any? %>
+<!-- # <% if @user.errors.any? %>
+# 	<div id="error_explanation">
+# 		<h2> <%= pluralize(@user.errors.count, 'error') %>
+# 			prohibited this user from being saved:
+# 		</h2>
+# 		<p> There were problems with the following fields:</p>
+# 		<ul>
+# 			<% @user.errors.full_messages.each do |error| %>
+# 				<li><%= error %></li>
+# 			<%end%>
+# 		</ul>
+# 	</div>
+# <%end%> -->
+<!-- change all @user above to object so that we can call render 'shared/error_messages', :object => f.object to use it -->
+<% if object.errors.any? %>
 	<div id="error_explanation">
-		<h2> <%= pluralize(@user.errors.count, 'error') %>
-			prohibited this user from being saved:
-		</h2>
-		<p> There were problems with the following fields:</p>
-		<ul>
-			<% @user.errors.full_messages.each do |error| %>
-				<li><%= error %></li>
-			<%end%>
+		<h2> <%= pluralize(object.errors.count, 'error') %>
+ 			prohibited this user from being saved:
+ 		</h2>
+ 		<p> There were problems with the following fields:</p>
+ 		<ul>
+ 			<% object.errors.full_messages.each do |error| %>
+ 				<li><%= error %></li>
+ 			<%end%>
 		</ul>
 	</div>
 <%end%>

@@ -5,3 +5,7 @@ Factory.define :user do |user|
   user.password     "foobar"
   user.password_confirmation  "foobar"
 end
+
+Factory.sequence :email do |n| # used to create lots of diff emails
+  "person-#{n}@example.com"
+end

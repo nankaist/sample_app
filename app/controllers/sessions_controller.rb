@@ -14,7 +14,8 @@ class SessionsController < ApplicationController
       # sign the user in and redirect to the user's show page.
       flash[:success] = "Successful Log in! " # flash waits for redirect_to
       sign_in user
-      redirect_to user
+      # redirect_to user
+      redirect_back_or user
     end
   end
   

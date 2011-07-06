@@ -1,0 +1,10 @@
+<h1>All users</h1>
+
+<%= will_paginate %>
+<ul class ="users">
+	<% @users.each do |user| %>
+		<%= render user %> <!-- call the defined user partials -->
+	<% end %>
+	<!-- here we can use render @users to replace the 3 lines above, rails can infer @users is a list of User, and call _user.html.erb partials -->
+</ul>
+<%= will_paginate %>
