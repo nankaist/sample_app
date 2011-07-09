@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   #!!!this line make two attributes accessible for outside users, and other attributes not.
   attr_accessible :name, :email, :password, :password_confirmation
   
+  has_many :microposts, :dependent => :destroy # user has_many microposts, and the :destroy of posts is dependent on user.(aka, it user is destroyed, its posts too.)
+  
   # validate the presence of attributes
   validates :name, :presence => true,
                    :length => {:maximum => 50}
@@ -52,6 +54,11 @@ class User < ActiveRecord::Base
     # or same with
     # return nil if user.nil?
     # reutrn user if user.salt == cookies_salt
+  end
+  
+  def feed
+    # this is preliminary. full implementaion in Chapter 12
+    Micropost.where("user_id = ?", id) # use "?" to ensuer id is escaped before being included in SQL query, which prevent SQL injection.
   end
   
   # a callback to create the encryted_password attribute

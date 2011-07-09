@@ -5,10 +5,18 @@
 				<%= gravatar_for @user, :size => 60 %><!-- call gravatar helper to setup the profile img with option -->
 				<%= @user.name %>
 			</h1>
+			<% unless @user.microposts.empty? %>
+				<table class="microposts" summary="User microposts">
+					<%= render @microposts %> <!-- render each posts in @microposts using partial _micropost.html.erb in microposts views directory -->
+				</table>
+				<%= will_paginate @microposts %> <!-- it needs the explicit variable, 'cos it's not the default @user -->
+				<!-- but of course, we need to define such a @microposts variable in user show action -->
+			<% end %>
 		</td>
 		<td class = "sidebar round">
 			<strong> Name </strong> <%= @user.name %></br>
-			<strong> URL </storng> <%= link_to user_path(@user), @user %>
+			<strong> URL </storng> <%= link_to user_path(@user), @user %></br>
+			<strong> Microposts </strong> <%= @user.microposts.count %>
 		</td>
 	</tr>
 </table>

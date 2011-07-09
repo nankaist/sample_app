@@ -33,6 +33,10 @@ module SessionsHelper
   def signed_in?
     !current_user.nil?
   end
+
+  def authenticate # for before_filter to authenticate signin status before actions
+    deny_access unless signed_in? #deny_access defined in sessions_helper.rb
+  end
   
   def deny_access
     store_location # used for friendly forwarding

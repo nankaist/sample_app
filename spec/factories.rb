@@ -9,3 +9,8 @@ end
 Factory.sequence :email do |n| # used to create lots of diff emails
   "person-#{n}@example.com"
 end
+
+Factory.define :micropost do |micropost| # define the micropost model
+  micropost.content "Foo Bar"
+  micropost.association :user
+end

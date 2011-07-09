@@ -4,6 +4,7 @@ SampleApp::Application.routes.draw do
   # add users resources into router
   resources :users
   resources :sessions, :only => [:new, :create, :destroy] #with only option to define actions of sessions
+  resources :microposts, :only => [:create, :destroy]
   
   match '/signup', :to => 'users#new'
   match '/signin', :to => 'sessions#new'

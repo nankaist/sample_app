@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id]) # define @user for the view 
+    @microposts = @user.microposts.paginate(:page => params[:page]) # paginate converts array into a collection for paginate
     @title = @user.name # a title for user show page
   end
   
@@ -65,9 +66,6 @@ class UsersController < ApplicationController
   end
   
   private
-    def authenticate # for before_filter to authenticate signin status before actions
-      deny_access unless signed_in? #deny_access defined in sessions_helper.rb
-    end
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
