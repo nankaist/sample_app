@@ -1,0 +1,23 @@
+<script type="text/javascript">
+var maxnum = 140
+function characterCounter(field,cntfield){ 
+	document.getElementById(cntfield).innerHTML = maxnum - document.getElementById(field).value.length;
+}
+</script>
+
+<%= form_for @micropost do |f| %>
+	<%= render 'shared/error_messages', :object => f.object %>
+	<div class="field"> <!-- use counter to count the character left to 140 in the text_area -->
+		<%= f.text_area :content, :id => "micropost_content", 
+		:onKeyDown=>"characterCounter('micropost_content','character_count')", 
+		:onKeyUp=>"characterCounter('micropost_content','character_count')" %>
+	</div>
+	<span id="character_count">
+		<script>document.write(maxnum)</script>
+	</span> &nbsp characters left. <br>
+	
+	<div class="actions">
+		<%= f.submit "Submit" %>
+	</div>
+<% end %>
+
