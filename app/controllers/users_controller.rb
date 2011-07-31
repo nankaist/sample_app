@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :edit, :update, :destroy] #before_filter arrange for a particular method to be called before the given actions(actions are restriced after :only)
+  # before_filter :authenticate, :only => [:index, :edit, :update, :destroy] #before_filter arrange for a particular method to be called before the given actions(actions are restriced after :only)
+  before_filter :authenticate, :except => [:show, :new, :create] #better than above, 'cos of its scalability
   before_filter :correct_user, :only => [:edit, :update] # for the wrong user not to access :edit and :update
   before_filter :admin_user, :only => :destroy # restrict :destroy action to admins
   before_filter :no_new_after_signin, :only => [:new, :create] # no need for sigin user to new/create again, so redirect to root_path
@@ -63,6 +64,20 @@ class UsersController < ApplicationController
       flash[:success] = "User destroyed !"
     end
     redirect_to users_path
+  end
+  
+  def following #corresponding to the routes for following and followers
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(:page => params[:page]) # @users only include items contained in one pages, 'cos it uses paginate
+    render 'show_follow'
+  end
+  
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(:page => params[:page])
+    render 'show_follow'
   end
   
   private

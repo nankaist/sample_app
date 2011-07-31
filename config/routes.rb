@@ -2,9 +2,14 @@ SampleApp::Application.routes.draw do
   get "sessions/new"
 
   # add users resources into router
-  resources :users
+  resources :users do
+    member do # route the URLs for user follow... like: /users/1/following /users/1/followers
+      get :following, :followers
+    end
+  end
   resources :sessions, :only => [:new, :create, :destroy] #with only option to define actions of sessions
   resources :microposts, :only => [:create, :destroy]
+  resources :relationships, :only => [:create, :destroy] #routes for the user follow/unfollow relationships
   
   match '/signup', :to => 'users#new'
   match '/signin', :to => 'sessions#new'

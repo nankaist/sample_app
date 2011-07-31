@@ -1,0 +1,9 @@
+<!-- form for following a user -->
+<%= form_for current_user.relationships.build(:followed_id => @user.id),
+ 			:remote => true do |f| %> <!-- :remote make this request to be a Ajax request --> <!-- this send a POST request to create a relationship -->
+	<div><%= f.hidden_field :followed_id %></div> <!-- use hidden_field to hide the unwanted followed_id content -->
+	<div class="actions"><%= f.submit "Follow" %></div>
+<% end %>
+
+<!-- this will produce HTML: <input id="relationship_followed_id" name="relationship[followed_id]"
+type="hidden" value="3" /> -->

@@ -1,0 +1,3 @@
+$("follow_form").update("<%= escape_javascript(render 'users/follow') %>") 
+//must use escape_javascript before rendering partial to escape the the double-quote or other special character in the partial
+$("followers").update("<%= pluralize(@user.followers.count, 'follower')%>")

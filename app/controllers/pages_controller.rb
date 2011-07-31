@@ -3,7 +3,7 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in? # to pass micropost and feed_items instance variable to home page in view when signin
       @micropost = Micropost.new 
-      @feed_items = current_user.feed.paginate(:page => params[:page])
+      @feed_items = current_user.feed.paginate(:page => params[:page]) # it paginate from the database, 'cos of the scope in from_users_followed_by()
     end
   end
 

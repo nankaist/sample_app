@@ -15,11 +15,11 @@ describe "Microposts" do
       it "should not make a new micropost" do
         lambda do
           visit root_path
-          fill_in :micropost_content, :with => ""
+          fill_in :micropost_content, :with => "" # :micropost_content is the id of the element in HTML
           click_button
           response.should render_template('pages/home')
           response.should have_selector("div#error_explanation")
-        end.should_not change(Mciropost, :count)
+        end.should_not change(Micropost, :count)
       end
     end
     describe "success" do

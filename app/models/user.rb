@@ -16,7 +16,14 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   
   has_many :microposts, :dependent => :destroy # user has_many microposts, and the :destroy of posts is dependent on user.(aka, it user is destroyed, its posts too.)
-  
+  has_many :relationships, :foreign_key => "follower_id", :dependent => :destroy # we need to indicate the :foreign_key in the table of :relationship, because this key is not the default <class>_id right now.
+  # use :following as the plural of "followed", with the :source to specify the source of the user.following array for the followed users
+  has_many :following, :through => :relationships, :source => :followed 
+  has_many :reverse_relationships, :foreign_key => "followed_id",
+                                    :class_name => "Relationship", # need include the class name for this, same with above, otherwise rails will look for a ReverseRelationship class 
+                                    :dependent => :destroy
+  has_many :followers, :through => :reverse_relationships, :source => :follower
+        
   # validate the presence of attributes
   validates :name, :presence => true,
                    :length => {:maximum => 50}
@@ -56,9 +63,21 @@ class User < ActiveRecord::Base
     # reutrn user if user.salt == cookies_salt
   end
   
+  def following?(followed)
+    relationships.find_by_followed_id(followed) # !! here, we omitted the user itself, this is same with self.relationships.find...
+  end
+  
+  def follow!(followed)
+    relationships.create!(:followed_id => followed.id)
+  end
+  
+  def unfollow!(followed) # just find it by id and destroy
+    relationships.find_by_followed_id(followed).destroy
+  end
+      
   def feed
-    # this is preliminary. full implementaion in Chapter 12
-    Micropost.where("user_id = ?", id) # use "?" to ensuer id is escaped before being included in SQL query, which prevent SQL injection.
+    # Micropost.where("user_id = ?", id) # use "?" to ensuer id is escaped before being included in SQL query, which prevent SQL injection.
+    Micropost.from_users_followed_by(self)
   end
   
   # a callback to create the encryted_password attribute

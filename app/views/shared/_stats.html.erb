@@ -1,0 +1,22 @@
+<!-- this partials used to show the counts of following & follower in Home and profile page -->
+<% @user ||= current_user %> <!-- this does nothing when @user is not nil(on a progile page), but when it is(on the Home page) it set @user to the current user -->
+<div class="stats">
+	<table summary="User stats">
+		<tr>
+			<td>
+				<a href="<%= following_user_path(@user) %>">
+					<span id="following" class="stat"> <!-- id is for the Ajax implementation -->
+						<%= @user.following.count %> following
+					</span>
+				</a>
+			</td>
+			<td>
+				<a href="<%= followers_user_path(@user) %>">
+					<span id="followers" class="stat">
+						<%= pluralize(@user.followers.count, "follower") %>
+					</span>
+				</a>
+			</td>
+		</tr>
+	</table>
+</div>

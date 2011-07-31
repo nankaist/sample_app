@@ -1,0 +1,6 @@
+// corresponding javascript for the create action, which will be called when format.js runs in create action
+$("follow_form").update("<%= escape_javascript(render('users/unfollow')) %>") 
+//must use escape_javascript before rendering partial to escape the the double-quote or other special character in the partial
+// $("followers").update('<%= "#{@user.followers.count} followers" %>')
+$("followers").update("<%= pluralize(@user.followers.count, 'follower')%>")
+
