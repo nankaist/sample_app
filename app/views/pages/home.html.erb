@@ -1,3 +1,16 @@
+<% form_tag microposts_path, :method => 'get' do %> <!-- search bar for the micropost -->
+	<p>
+		<%= text_field_tag :search, params[:search] %>
+		<%= submit_tag "Search all posts", :name => nil %>
+	</p>
+<% end %>
+<% form_tag micropost_path(current_user), :method => 'get' do %> <!-- search bar for the micropost -->
+	<p>
+		<%= text_field_tag :search, params[:search] %>
+		<%= submit_tag "Search my posts", :name => nil %>
+	</p>
+<% end %>
+
 <% if signed_in? %> <!-- add microposts creation form to homepage -->
 	<%= render 'pages/home_signed_in' %> <!-- the path relative to views dir should be used (the pages/ ) -->
 <% else %>

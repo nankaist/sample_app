@@ -17,7 +17,17 @@ class MicropostsController < ApplicationController
     @micropost.destroy
     redirect_back_or root_path
   end
-    
+  
+  def index ### search action for all micropost
+    @feed_items = Micropost.search(params[:search]).paginate(:page => params[:page])
+    render 'microposts/index'
+  end  
+  
+  def show ### search action for current_user's posts
+    @feed_items = current_user.microposts.search(params[:search]).paginate(:page => params[:page])
+    render 'microposts/show'
+  end
+  
   private
     def authorized_user
       @micropost = current_user.microposts.find_by_id(params[:id]) 

@@ -8,7 +8,7 @@ SampleApp::Application.routes.draw do
     end
   end
   resources :sessions, :only => [:new, :create, :destroy] #with only option to define actions of sessions
-  resources :microposts, :only => [:create, :destroy]
+  resources :microposts, :only => [:create, :destroy, :index, :show] #:index is for the search action
   resources :relationships, :only => [:create, :destroy] #routes for the user follow/unfollow relationships
   
   match '/signup', :to => 'users#new'

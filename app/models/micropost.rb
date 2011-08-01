@@ -8,6 +8,14 @@ class Micropost < ActiveRecord::Base
   
   default_scope :order => 'microposts.created_at DESC' # order posts with default_scope, DESC is SQL for descending(newest to oldest)
 
+  def self.search(search) # search the content with the keyword #{search}
+    if search
+      find(:all, :conditions => ['content LIKE ?', "%#{search}%"]) 
+    else
+      find(:all)
+    end
+  end
+
   # def self.from_users_followed_by(user)
     # following_ids = user.following_ids # user.following_ids is the name for user.following.map(&:id), rails support it.
     # pull all followed user into memory, not efficient enough
