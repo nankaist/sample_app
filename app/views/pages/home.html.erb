@@ -4,11 +4,13 @@
 		<%= submit_tag "Search all posts", :name => nil %>
 	</p>
 <% end %>
+<% unless current_user.nil? %>
 <% form_tag micropost_path(current_user), :method => 'get' do %> <!-- search bar for the micropost -->
 	<p>
 		<%= text_field_tag :search, params[:search] %>
 		<%= submit_tag "Search my posts", :name => nil %>
 	</p>
+<% end %>
 <% end %>
 
 <% if signed_in? %> <!-- add microposts creation form to homepage -->
