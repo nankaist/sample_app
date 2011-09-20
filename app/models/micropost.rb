@@ -9,7 +9,7 @@ class Micropost < ActiveRecord::Base
   default_scope :order => 'microposts.created_at DESC' # order posts with default_scope, DESC is SQL for descending(newest to oldest)
 
   def self.search(search) # search the content with the keyword #{search}
-    if search
+    unless search.empty?
       find(:all, :conditions => ['content LIKE ?', "%#{search}%"]) 
     else
       find(:all)
